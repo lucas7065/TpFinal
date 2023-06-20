@@ -7,33 +7,38 @@ import java.util.HashMap;
 
 public class ControladoraUsuario {
 
-    private HashMap<String, Usuario> usuarios;
+    GenericaMap<String, Usuario> usuarios;
 
-    public ControladoraUsuario(){
-        usuarios = new HashMap<>();
+    public ControladoraUsuario() {
+        this.usuarios = new GenericaMap<>();
     }
 
-    public static boolean loginUsuario(String username){
-        boolean rta=false;
-        rta= comprobarUsuario(username);
+    public Usuario loginUsuario(String username) {
+        Usuario rta = null;
+        rta = usuarios.getElemento(username);
         return rta;
     }
 
-    public static boolean comprobarUsuario(String username){
-
-        // adaptar a hashamap
-        boolean rta=false;
-        ArrayList<Usuario> usuarios= new ArrayList<>();
-        usuarios= ControladoraArchivos.leer("usuarios.dat");
-        for(Usuario u: usuarios){
-            if(u.getNombreDeUsuario().equals(username)){
-                rta=true;
-            }
+    public boolean registrarUsuario(Usuario usuario) {
+        boolean rta = false;
+        rta = comprobarUsuario(usuario.getNombreDeUsuario());
+        if (rta == false) {
+            usuarios.agregar(usuario.getNombreDeUsuario(), usuario);
+            ArrayList<Usuario> aux = new ArrayList<>();
+            aux = usuarios.pasarValoresAunArray();
+            ControladoraArchivos.grabar(aux);
         }
         return rta;
     }
 
-    // falta registrar
+    public boolean comprobarUsuario(String username) {
+        boolean rta = false;
+        rta = usuarios.contains(username);
+        return rta;
 
+    }
 
+    public String listarUsuarios() {
+        return usuarios.listar();
+    }
 }

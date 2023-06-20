@@ -5,6 +5,7 @@ import BJ.I_Jugar;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Usuario implements Serializable, I_Jugar {
         private String nombreDeUsuario;
@@ -149,5 +150,24 @@ public class Usuario implements Serializable, I_Jugar {
                 ", saldo=" + saldo +
                 ", puntaje=" + puntaje +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean rta = false;
+        if (o != null) {
+            if (o instanceof Usuario) {
+                Usuario u = (Usuario) o;
+                if (((Usuario) o).nombreDeUsuario.equalsIgnoreCase(nombreDeUsuario)) {
+                    rta = true;
+                }
+            }
+        }
+        return rta;
+    }
+
+    @Override
+    public int hashCode() {
+        return 1;
     }
 }

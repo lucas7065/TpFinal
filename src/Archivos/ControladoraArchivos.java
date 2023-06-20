@@ -1,4 +1,5 @@
 package Archivos;
+import Jugador.GenericaMap;
 import Jugador.Usuario;
 
 import java.io.*;
@@ -37,53 +38,53 @@ public class ControladoraArchivos {
             }
         }
 
-        public static ArrayList<Usuario> leer(String s)
+    public static GenericaMap<String, Usuario> leer(String s)
+    {
+        GenericaMap<String, Usuario> usuarios=new GenericaMap<>();
+
+        FileInputStream fileInputStream = null;
+        ObjectInputStream objectInputStream = null;
+
+        try
         {
-            ArrayList<Usuario>usuarioArrayList = new ArrayList<>();
+            fileInputStream = new FileInputStream("usuarios.dat");
+            objectInputStream = new ObjectInputStream(fileInputStream);
 
-            FileInputStream fileInputStream = null;
-            ObjectInputStream objectInputStream = null;
-
+            while (true)
+            {
+                Usuario aux = (Usuario) objectInputStream.readObject();
+                usuarios.agregar(aux.getNombreDeUsuario(), aux);
+            }
+        }
+        catch (EOFException ex)
+        {
+            System.out.println("FIN de ARCHIVO");
+        }
+        catch (ClassNotFoundException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        finally
+        {
             try
             {
-                fileInputStream = new FileInputStream("usuarios.dat");
-                objectInputStream = new ObjectInputStream(fileInputStream);
+                if (fileInputStream!=null)
+                    fileInputStream.close();
 
-                while (true)
-                {
-                    Usuario aux = (Usuario) objectInputStream.readObject();
-                    usuarioArrayList.add(aux);
-                }
-            }
-            catch (EOFException ex)
-            {
-                System.out.println("FIN de ARCHIVO");
-            }
-            catch (ClassNotFoundException ex)
-            {
-                System.out.println(ex.getMessage());
+                if (objectInputStream!=null)
+                    objectInputStream.close();
             }
             catch (IOException ex)
             {
                 System.out.println(ex.getMessage());
             }
-            finally
-            {
-                try
-                {
-                    if (fileInputStream!=null)
-                        fileInputStream.close();
 
-                    if (objectInputStream!=null)
-                        objectInputStream.close();
-                }
-                catch (IOException ex)
-                {
-                    System.out.println(ex.getMessage());
-                }
-
-            }
-
-            return usuarioArrayList;
         }
+
+        return usuarios;
+    }
     }

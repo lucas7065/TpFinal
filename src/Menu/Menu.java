@@ -1,6 +1,7 @@
 package Menu;
 
 import BJ.Partida;
+import JSON.ControladoraJSON;
 import Jugador.ControladoraUsuario;
 import Jugador.Usuario;
 
@@ -12,22 +13,58 @@ public class Menu {
         teclado = new Scanner(System.in);
         Usuario usuario = null;
         ControladoraJuego controladoraJuego = new ControladoraJuego();
-        // 1 para login o 2 para registrarse
+        ControladoraUsuario controladoraUsuario = new ControladoraUsuario();
 
-        Partida partida = controladoraJuego.crearNuevaPartida(usuario);
+        controladoraUsuario = ControladoraJSON.leerArchivo();
 
-        System.out.println("cuanto apostas?");
-        partida.setApuesta(teclado.nextInt());
+        
+        String seguir = "s";
+        int eleccionUsuario = 0;
+        String jugar = ""; // para pedir o plantarse.
+
+        while (seguir.equalsIgnoreCase("s")){
+            System.out.println("Menu: " + "\n" +
+                    "1. Ingresar" + "\n" +
+                    "2. Registrarse");
+            eleccionUsuario = teclado.nextInt();
+            if (eleccionUsuario == 1){
+                System.out.println("Bienvenido! Ingrese su usuario");
+                usuario = controladoraUsuario.loginUsuario(teclado.nextLine());
+                if (usuario!=null){
+                    Partida partida = controladoraJuego.crearNuevaPartida(usuario);
+
+                    System.out.println("Dinero disponible: " + usuario.getSaldo() + "\n" +
+                            "¿Cuanto desea apostar?");
+                    // falta comprobacion de si tiene suficiente saldo disponible
+
+                    partida.setApuesta(teclado.nextInt());
+
+                    if (partida.iniciarPartida()){
+                        System.out.println("BlackJack! Ganaste.");
+                    }else {
+                        System.out.println("Usted tiene: " + usuario.listarMano());
+                        System.out.println("Dealer: " + partida.mostrarManoDealer());
+                    }
+                }else {
+                    System.out.println("Ese nombre de usuario no existe!");
+                }
 
 
-        if (partida.iniciarPartida()){
-            System.out.println("ganaste!");
-        }else {
-            System.out.println("desea otra carta?");
-            partida.mostrarManoDealer();
+            }else if (eleccionUsuario == 2){
+                // registrar usuario
+            }else{
+                System.out.println("Opcion incorrecta.");
+            }
+            System.out.println("¿Desea continuar?");
+            seguir = teclado.nextLine();
         }
 
-        if (partida.getDealer().)
+
+
+
+
+
+
 
 
 

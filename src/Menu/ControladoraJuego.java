@@ -14,8 +14,7 @@ public class ControladoraJuego {
     }
 
     public Partida crearNuevaPartida(Usuario usuario){
-
-       Partida nuevaPartida = new Partida(archivo.generarNuevoId(), usuario);
+        Partida nuevaPartida = new Partida(archivo.generarNuevoId(), usuario);
 
         return nuevaPartida;
     }
