@@ -40,7 +40,7 @@ public class ControladoraArchivos {
 
     public static GenericaMap<String, Usuario> leer(String s)
     {
-        GenericaMap<String, Usuario> usuarios=new GenericaMap<>();
+        GenericaMap<String, Usuario> usuarios=new GenericaMap<String, Usuario>();
 
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;

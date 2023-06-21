@@ -43,10 +43,10 @@ public class Carta {
 
     @Override
     public String toString() {
-        return "Carta{" +
-                "palo=" + palo +
-                ", rango=" + rango +
-                ", valor=" + valor +
+        return "Carta: " +
+                "" + rango +
+                " de " + palo +
+                ", valor:" + valor +
                 '}';
     }
 }

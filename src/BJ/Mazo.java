@@ -1,9 +1,11 @@
 package BJ;
 
 import BJ.Carta;
+import Exceptions.PilaVaciaException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 import static BJ.Rango.*;
 
@@ -30,6 +32,7 @@ private Pila<Carta> cartas;
                     i++;
                 }
                 cartas.apilar(carta);
+                cartas.mezclar();
             }
         }
     }

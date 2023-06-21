@@ -9,12 +9,13 @@ public class ControladoraJuego {
     private Pila<Partida> partidas;
 
 
+
     public ControladoraJuego(){
         partidas = new Pila<>();
     }
 
     public Partida crearNuevaPartida(Usuario usuario){
-        Partida nuevaPartida = new Partida(archivo.generarNuevoId(), usuario);
+        Partida nuevaPartida = new Partida(1, usuario);
 
         return nuevaPartida;
     }

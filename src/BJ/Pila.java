@@ -1,6 +1,9 @@
 package BJ;
 
+import Exceptions.PilaVaciaException;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Pila<T> {
@@ -24,6 +27,10 @@ public class Pila<T> {
             throw new PilaVaciaException("La pila esta vacía");
         }
         return pila.remove(pila.size() - 1);
+    }
+
+    public void mezclar(){
+        Collections.shuffle(pila);
     }
 
     public T tope() throws PilaVaciaException {

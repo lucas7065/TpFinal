@@ -1,4 +1,4 @@
-package BJ;
+package Exceptions;
 
 public class PilaVaciaException extends Exception {
 

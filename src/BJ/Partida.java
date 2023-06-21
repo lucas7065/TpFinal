@@ -1,6 +1,7 @@
 package BJ;
 
 import Jugador.Usuario;
+import Jugador.Jugador;
 
 import java.util.ArrayList;
 
@@ -21,36 +22,79 @@ public class Partida {
         apuesta = 0;
     }
 
+    /*
+
     public int iniciarTurnoUsuario(){
         usuario.iniciarMano(mazo.sacarCarta(), mazo.sacarCarta());
+
 
         return sumarMano(usuario.getMano());
     }
 
-    public Carta iniciarTurnoDealer(){
+    public String iniciarTurnoDealer(){
         dealer.iniciarMano(mazo.sacarCarta(), mazo.sacarCarta());
 
-        return dealer.getMano().get(0);
+        return dealer.getMano().get(0).toString() + "\nCarta: X";
     }
 
-    public boolean iniciarPartida(){
-        boolean rta = false;
-        if (iniciarTurnoUsuario() == 21){
-            rta = true;
-            resultado += apuesta*2;
-        }
 
-        iniciarTurnoDealer();
-        return rta;
+    public void repartirCarta(){
+        usuario.pedirCarta(mazo.sacarCarta());
     }
+
 
 
 
     //metodos para el juego
 
+    public String mostrarManoUsuario(){
+        return usuario.listarMano() + "( " + sumarMano(usuario.getMano()) + " )";
+    }
+
     public String mostrarManoDealer(){
         return dealer.listarMano() + "( " + sumarMano(dealer.getMano()) + " )";
     }
+
+     */
+
+
+    public boolean iniciarPartida(){
+        boolean rta = false;
+        for (int i = 0; i<2; i++){
+            usuario.recibirCarta(mazo.sacarCarta());
+            dealer.recibirCarta(mazo.sacarCarta());
+        }
+        if (verificarBJ(usuario)){
+            usuario.setTurno(false);
+            dealer.setTurno(true);
+            rta = true;
+        }
+
+        return rta;
+    }
+
+
+    public boolean verificarBJ(Jugador jugador){
+        boolean rta = false;
+        if (sumarMano(jugador.getMano()) == 21){
+            rta = true;
+            resultado += apuesta*2;
+        }
+        return rta;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

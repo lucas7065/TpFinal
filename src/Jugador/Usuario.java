@@ -1,86 +1,71 @@
 package Jugador;
 
-import BJ.Carta;
-import BJ.I_Jugar;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Objects;
 
-public class Usuario implements Serializable, I_Jugar {
+
+
+public class Usuario extends Jugador implements Serializable{
         private String nombreDeUsuario;
-        private String nombre;
-        private String apellido;
+        private String nombreCompleto;
         private String email;
         private String password;
-        private String fechaNacimiento;
         private int saldo;
         private int puntaje;
-        private ArrayList<Carta> mano;
+
 
     public Usuario() {
-        this.nombre = "";
-        this.apellido = "";
+        this.nombreCompleto = "";
         this.email = "";
         this.nombreDeUsuario = "";
         this.password = "";
-        this.fechaNacimiento = "";
-        this.saldo = 0;
+        this.saldo = 1000;
         this.puntaje = 0;
+        super.setTurno(true);
     }
 
 
-    public Usuario(String nombre, String apellido, String id, String email, String nombreDeUsuario, String password, String fechaNacimiento, int saldo, int puntaje) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
+    public Usuario(String nombreDeUsuario, String nombreCompleto, String email, String password, int saldo, int puntaje) {
         this.nombreDeUsuario = nombreDeUsuario;
+        this.nombreCompleto = nombreCompleto;
+        this.email = email;
         this.password = password;
-        this.fechaNacimiento = fechaNacimiento;
         this.saldo = saldo;
         this.puntaje = puntaje;
     }
 
-    public void iniciarMano(Carta c1, Carta c2){
-        mano.add(c1);
-        mano.add(c2);
+    public Usuario(String nombre, String apellido, String id, String email, String nombreDeUsuario, String password, int saldo, int puntaje) {
+        this.nombreCompleto = nombre;
+        this.email = email;
+        this.nombreDeUsuario = nombreDeUsuario;
+        this.password = password;
+        this.saldo = saldo;
+        this.puntaje = puntaje;
     }
 
-    @Override
-    public boolean plantarse() {
-        return false;
-    }
 
-    @Override
-    public Carta pedirCarta(Carta carta) {
-        return null;
-    }
 
 
     // --------------------------------------------- GETTER Y SETTER ---------------------------------------------
 
-    public String getApellido() {
-        return apellido;
-    }
+
 
     public String getNombreDeUsuario() {
         return nombreDeUsuario;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+
 
     public void setNombreDeUsuario(String nombreDeUsuario) {
         this.nombreDeUsuario = nombreDeUsuario;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreCompleto() {
+        return nombreCompleto;
     }
 
-    public void setNombre(String nombre) {
-            this.nombre = nombre;
+    public void setNombreCompleto(String nombreCompleto) {
+            this.nombreCompleto = nombreCompleto;
     }
 
     public String getEmail() {
@@ -98,14 +83,6 @@ public class Usuario implements Serializable, I_Jugar {
         this.password = password;
     }
 
-    public String getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(String fechaNacimiento) {
-            this.fechaNacimiento = fechaNacimiento;
-    }
-
     public int getSaldo() {
         return saldo;
     }
@@ -119,34 +96,17 @@ public class Usuario implements Serializable, I_Jugar {
     }
 
     public void setPuntaje(int puntaje) {
-            this.puntaje = puntaje;
-        }
-
-    public ArrayList<Carta> getMano() {
-        return mano;
-    }
-
-    @Override
-    public String listarMano(){
-        String info = "";
-
-        for (Carta carta : mano){
-            info += carta.toString() + "\n";
-        }
-
-        return info;
+        this.puntaje = puntaje;
     }
 
 
     @Override
     public String toString() {
         return "Usuario{" +
-                "nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
+                "nombreDeUsuario='" + nombreDeUsuario + '\'' +
+                ", nombreCompleto='" + nombreCompleto + '\'' +
                 ", email='" + email + '\'' +
-                ", nombreDeUsuario='" + nombreDeUsuario + '\'' +
                 ", password='" + password + '\'' +
-                ", fechaNacimiento='" + fechaNacimiento + '\'' +
                 ", saldo=" + saldo +
                 ", puntaje=" + puntaje +
                 '}';
