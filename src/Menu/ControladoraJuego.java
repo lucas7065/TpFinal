@@ -8,6 +8,8 @@ import Exceptions.UsuarioNoExisteException;
 import Jugador.ControladoraUsuario;
 import Jugador.Usuario;
 
+import java.util.Iterator;
+
 public class ControladoraJuego {
     private Pila<Partida> partidas;
 
@@ -49,5 +51,8 @@ public class ControladoraJuego {
             System.out.println(e.getMessage());
         }
     }
+
+
+
 
 }

@@ -97,7 +97,7 @@ public class ControladoraArchivos {
 
         try
         {
-            fileOutputStream = new FileOutputStream("Partidas.dat");
+            fileOutputStream = new FileOutputStream("partidas.dat");
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             while(!partidas.pilaVacia())
             {
@@ -131,7 +131,7 @@ public class ControladoraArchivos {
 
         try
         {
-            fileInputStream = new FileInputStream("Partidas.dat");
+            fileInputStream = new FileInputStream("partidas.dat");
             objectInputStream = new ObjectInputStream(fileInputStream);
 
             while (true)

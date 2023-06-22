@@ -52,7 +52,7 @@ public class GenericaMap<K, V> {
         Iterator it = elementos.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<K, V> e = (Map.Entry<K, V>)it.next();
-            lista += e.getValue().toString();
+            lista += e.getValue().toString() + "\n";
         }
         return lista;
     }

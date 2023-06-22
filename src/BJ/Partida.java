@@ -88,7 +88,8 @@ public class Partida {
 
     public Jugador definirGanador(){
         Jugador ganador = null;
-        int resultado = apuesta;
+        int resultado = 0;
+        resultado = apuesta;
 
         if (sumarMano(usuario.getMano())<=21 && sumarMano(dealer.getMano())<=21){
             if (sumarMano(dealer.getMano()) < sumarMano(usuario.getMano())){
@@ -105,7 +106,7 @@ public class Partida {
             ganador = dealer;
         }
 
-        usuario.setSaldo(resultado);
+        usuario.setSaldo(usuario.getSaldo()+resultado);
         setResultado(resultado);
         this.resultado += resultado;
         usuario.getMano().clear();

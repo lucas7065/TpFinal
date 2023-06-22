@@ -5,6 +5,7 @@ import BJ.Partida;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Iterator;
 
 
 public class Usuario extends Jugador implements Serializable{
@@ -25,7 +26,7 @@ public class Usuario extends Jugador implements Serializable{
         this.saldo = 1000;
         this.puntaje = 0;
         super.setTurno(true);
-        partidas = new HashSet<>();
+        partidas = new HashSet<Partida>();
     }
 
 
@@ -36,7 +37,7 @@ public class Usuario extends Jugador implements Serializable{
         this.password = password;
         saldo = 1000;
         puntaje = 0;
-        partidas = new HashSet<>();
+        partidas = new HashSet<Partida>();
     }
 
     public Usuario(String nombre, String apellido, String id, String email, String nombreDeUsuario, String password) {
@@ -46,6 +47,7 @@ public class Usuario extends Jugador implements Serializable{
         this.password = password;
         this.saldo = 1000;
         puntaje = 0;
+        partidas = new HashSet<Partida>();
     }
 
 
@@ -58,8 +60,6 @@ public class Usuario extends Jugador implements Serializable{
     public String getNombreDeUsuario() {
         return nombreDeUsuario;
     }
-
-
 
     public void setNombreDeUsuario(String nombreDeUsuario) {
         this.nombreDeUsuario = nombreDeUsuario;
@@ -76,9 +76,12 @@ public class Usuario extends Jugador implements Serializable{
     public String getEmail() {
             return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 
     public String getPassword() {
         return password;
@@ -93,7 +96,7 @@ public class Usuario extends Jugador implements Serializable{
     }
 
     public void setSaldo(int saldo) {
-        this.saldo += saldo;
+        this.saldo = saldo;
     }
 
     public int getPuntaje() {
@@ -109,6 +112,19 @@ public class Usuario extends Jugador implements Serializable{
     }
 
 
+    public String listarPartidas(){
+        String info = "";
+
+        Iterator it = partidas.iterator();
+
+        while (it.hasNext()){
+            info += it.next().toString() + "\n";
+        }
+
+        return info;
+    }
+
+
 
     @Override
     public String toString() {
@@ -118,7 +134,7 @@ public class Usuario extends Jugador implements Serializable{
                 ", email='" + email + '\'' +
                 ", saldo=" + saldo +
                 ", puntaje=" + puntaje +
-                "" + password +
+                " " + password +
                 '}';
     }
 
@@ -128,7 +144,7 @@ public class Usuario extends Jugador implements Serializable{
         if (o != null) {
             if (o instanceof Usuario) {
                 Usuario u = (Usuario) o;
-                if (((Usuario) o).nombreDeUsuario.equalsIgnoreCase(nombreDeUsuario)) {
+                if (((Usuario) o).getNombreDeUsuario().equalsIgnoreCase(nombreDeUsuario)) {
                     rta = true;
                 }
             }

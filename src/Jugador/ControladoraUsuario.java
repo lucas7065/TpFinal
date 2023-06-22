@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ControladoraUsuario {
     GenericaMap<String, Usuario> usuarios;
 
-    public ControladoraUsuario(GenericaMap<String, Usuario> u) {
+    public ControladoraUsuario(GenericaMap<String,Usuario> u) {
         usuarios = u;
     }
 
@@ -31,27 +31,25 @@ public class ControladoraUsuario {
         return aux;
     }
 
-    public String registrarUsuario(Usuario usuario){
+    public boolean registrarUsuario(Usuario usuario) {
         boolean rta=false;
         String message="";
         try {
             rta = comprobarUsuario(usuario.getNombreDeUsuario());
             usuarios.agregar(usuario.getNombreDeUsuario(), usuario);
-            ArrayList<Usuario> aux=new ArrayList<>();
-            aux= usuarios.pasarValoresAunArray();
+            ArrayList<Usuario> aux = new ArrayList<>();
+            aux = usuarios.pasarValoresAunArray();
             ControladoraArchivos.grabarUsuarios(aux);
+        } catch (NombreDeUsuarioExistenteException e){
+            System.out.println(e.getMessage());
         }
-        catch(NombreDeUsuarioExistenteException e){
-            message=e.getMessage();
-
-        }
-        return message;
+        return rta;
 
     }
 
     public boolean comprobarUsuario(String username) throws NombreDeUsuarioExistenteException{
         boolean rta=false;
-        rta= usuarios.contains(username);
+        rta = usuarios.contains(username);
         if(rta) {
             throw new NombreDeUsuarioExistenteException("El nombre de usuario ya existe. Ingrese un nuevo nombre.");
         }
@@ -70,7 +68,18 @@ public class ControladoraUsuario {
         }
         return rta;
     }
-    public Usuario modificarNombreDeUsuario(String nuevoUsername, String viejoUsername){
+
+
+    public boolean comprobarMail(String email){
+        boolean rta = false;
+        if (email.contains("@") && email.contains(".")){
+            rta = true;
+        }
+        return rta;
+    }
+
+
+    public Usuario modificarNombreDeUsuario(String viejoUsername, String nuevoUsername){
         Usuario aux= null;
         String mensaje="";
         try{

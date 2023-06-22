@@ -27,9 +27,10 @@ public class ControladoraJSON {
                     usuario.setNombreDeUsuario(jsonObject.getString("username"));
                     usuario.setNombreCompleto(jsonObject.getString("name"));
                     usuario.setEmail(jsonObject.getString("email"));
-                    String json_password =ConsumoAPI.getInfo("https://www.psswrd.net/api/v1/password/?length=8&lower=1&upper=0&int=1&special=0");
-                    JSONObject password=new JSONObject(json_password);
-                    usuario.setPassword(password.getString("password"));
+                    //String json_password =ConsumoAPI.getInfo("https://www.psswrd.net/api/v1/password/?length=8&lower=1&upper=0&int=1&special=0");
+                    //JSONObject password=new JSONObject(json_password);
+                    //usuario.setPassword(password.getString("password"));
+                    usuario.setPassword("123");
                     System.out.println(cu.registrarUsuario(usuario));
                 }
 
