@@ -4,16 +4,23 @@ import Jugador.Jugador;
 
 public class Dealer extends Jugador{
     public Dealer(){
+        super();
     }
 
-    public String listarMano(boolean turnoUsuario){
+    public String listarMano(){
         String info = "";
-        if (turnoUsuario == false){
+        if (!isTurno()){
             info = getMano().get(0).toString() + "\nCarta: X";
         } else {
-            info = listarMano();
+            info = super.listarMano();
         }
         return info;
     }
+
+
+
+
+
+
 
 }

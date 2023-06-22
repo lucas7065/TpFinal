@@ -45,8 +45,6 @@ public class Carta {
     public String toString() {
         return "Carta: " +
                 "" + rango +
-                " de " + palo +
-                ", valor:" + valor +
-                '}';
+                " de " + palo;
     }
 }

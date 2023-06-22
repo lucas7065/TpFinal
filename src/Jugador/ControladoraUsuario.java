@@ -10,7 +10,11 @@ import java.util.ArrayList;
 public class ControladoraUsuario {
     GenericaMap<String, Usuario> usuarios;
 
-    public ControladoraUsuario() {
+    public ControladoraUsuario(GenericaMap<String, Usuario> u) {
+        usuarios = u;
+    }
+
+    public ControladoraUsuario(){
         usuarios = new GenericaMap<String, Usuario>();
     }
 
@@ -20,18 +24,10 @@ public class ControladoraUsuario {
      * @return el usuario
      * @throws ContraseñaIncorrectaException cuando la contraseña asociada al nombre de usuario no es correcta
      */
-    public Usuario loginUsuario(String username, String contraseña) {
+    public Usuario loginUsuario(String username, String contraseña) throws UsuarioNoExisteException, ContraseñaIncorrectaException {
         Usuario aux= null;
-        try {
-            aux = buscarUsuario(username);
-            comprobarContraseña(aux,contraseña);
-        }
-        catch(UsuarioNoExisteException e){
-            System.out.println(e.getMessage());
-        }
-        catch(ContraseñaIncorrectaException e){
-            System.out.println(e.getMessage());
-        }
+        aux = buscarUsuario(username);
+        comprobarContraseña(aux,contraseña);
         return aux;
     }
 
@@ -43,7 +39,7 @@ public class ControladoraUsuario {
             usuarios.agregar(usuario.getNombreDeUsuario(), usuario);
             ArrayList<Usuario> aux=new ArrayList<>();
             aux= usuarios.pasarValoresAunArray();
-            ControladoraArchivos.grabar(aux);
+            ControladoraArchivos.grabarUsuarios(aux);
         }
         catch(NombreDeUsuarioExistenteException e){
             message=e.getMessage();
@@ -85,7 +81,7 @@ public class ControladoraUsuario {
                 usuarios.agregar(aux.getNombreDeUsuario(), aux);
                 ArrayList<Usuario> arreglo=new ArrayList<>();
                 arreglo= usuarios.pasarValoresAunArray();
-                ControladoraArchivos.grabar(arreglo);
+                ControladoraArchivos.grabarUsuarios(arreglo);
                 mensaje="Nombre de usuario cambiado con éxito";
             }
         }
@@ -104,7 +100,7 @@ public class ControladoraUsuario {
                 usuarios.reemplazarValor(aux.getNombreDeUsuario(), aux);
                 ArrayList<Usuario> arreglo=new ArrayList<>();
                 arreglo= usuarios.pasarValoresAunArray();
-                ControladoraArchivos.grabar(arreglo);
+                ControladoraArchivos.grabarUsuarios(arreglo);
                 mensaje="Email cambiado con éxito.";
             }
         }
@@ -124,7 +120,7 @@ public class ControladoraUsuario {
                 usuarios.reemplazarValor(aux.getNombreDeUsuario(), aux);
                 ArrayList<Usuario> arreglo=new ArrayList<>();
                 arreglo= usuarios.pasarValoresAunArray();
-                ControladoraArchivos.grabar(arreglo);
+                ControladoraArchivos.grabarUsuarios(arreglo);
                 mensaje="Contraseña cambiada con éxito.";
             }
         }
@@ -144,7 +140,7 @@ public class ControladoraUsuario {
                 usuarios.reemplazarValor(aux.getNombreDeUsuario(), aux);
                 ArrayList<Usuario> arreglo=new ArrayList<>();
                 arreglo= usuarios.pasarValoresAunArray();
-                ControladoraArchivos.grabar(arreglo);
+                ControladoraArchivos.grabarUsuarios(arreglo);
                 mensaje="Nombre cambiado con éxito.";
             }
         }

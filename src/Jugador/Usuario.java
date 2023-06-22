@@ -1,8 +1,10 @@
 package Jugador;
 
 
-import java.io.Serializable;
+import BJ.Partida;
 
+import java.io.Serializable;
+import java.util.HashSet;
 
 
 public class Usuario extends Jugador implements Serializable{
@@ -12,6 +14,7 @@ public class Usuario extends Jugador implements Serializable{
         private String password;
         private int saldo;
         private int puntaje;
+        private transient HashSet<Partida> partidas;
 
 
     public Usuario() {
@@ -22,25 +25,27 @@ public class Usuario extends Jugador implements Serializable{
         this.saldo = 1000;
         this.puntaje = 0;
         super.setTurno(true);
+        partidas = new HashSet<>();
     }
 
 
-    public Usuario(String nombreDeUsuario, String nombreCompleto, String email, String password, int saldo, int puntaje) {
+    public Usuario(String nombreDeUsuario, String nombreCompleto, String email, String password) {
         this.nombreDeUsuario = nombreDeUsuario;
         this.nombreCompleto = nombreCompleto;
         this.email = email;
         this.password = password;
-        this.saldo = saldo;
-        this.puntaje = puntaje;
+        saldo = 1000;
+        puntaje = 0;
+        partidas = new HashSet<>();
     }
 
-    public Usuario(String nombre, String apellido, String id, String email, String nombreDeUsuario, String password, int saldo, int puntaje) {
+    public Usuario(String nombre, String apellido, String id, String email, String nombreDeUsuario, String password) {
         this.nombreCompleto = nombre;
         this.email = email;
         this.nombreDeUsuario = nombreDeUsuario;
         this.password = password;
-        this.saldo = saldo;
-        this.puntaje = puntaje;
+        this.saldo = 1000;
+        puntaje = 0;
     }
 
 
@@ -88,7 +93,7 @@ public class Usuario extends Jugador implements Serializable{
     }
 
     public void setSaldo(int saldo) {
-        this.saldo = saldo;
+        this.saldo += saldo;
     }
 
     public int getPuntaje() {
@@ -99,6 +104,11 @@ public class Usuario extends Jugador implements Serializable{
         this.puntaje = puntaje;
     }
 
+    public void cargarPartidas(Partida aux){
+        partidas.add(aux);
+    }
+
+
 
     @Override
     public String toString() {
@@ -106,9 +116,9 @@ public class Usuario extends Jugador implements Serializable{
                 "nombreDeUsuario='" + nombreDeUsuario + '\'' +
                 ", nombreCompleto='" + nombreCompleto + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", saldo=" + saldo +
                 ", puntaje=" + puntaje +
+                "" + password +
                 '}';
     }
 

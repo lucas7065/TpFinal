@@ -1,8 +1,10 @@
 package BJ;
 
+import Exceptions.DineroInsuficienteException;
 import Jugador.Usuario;
 import Jugador.Jugador;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Partida {
@@ -78,25 +80,46 @@ public class Partida {
         boolean rta = false;
         if (sumarMano(jugador.getMano()) == 21){
             rta = true;
-            resultado += apuesta*2;
+            resultado += apuesta;
         }
         return rta;
     }
 
 
+    public Jugador definirGanador(){
+        Jugador ganador = null;
+        int resultado = apuesta;
 
+        if (sumarMano(usuario.getMano())<=21 && sumarMano(dealer.getMano())<=21){
+            if (sumarMano(dealer.getMano()) < sumarMano(usuario.getMano())){
+                ganador = usuario;
+            } else if (sumarMano(dealer.getMano()) > sumarMano(usuario.getMano())){
+                ganador = dealer;
+                resultado*=-1;
+            }
+        }else if (sumarMano(usuario.getMano())<=21 && sumarMano(dealer.getMano())>21){
+            ganador = usuario;
+        }
+        else {
+            resultado*=-1;
+            ganador = dealer;
+        }
 
+        usuario.setSaldo(resultado);
+        setResultado(resultado);
+        this.resultado += resultado;
+        usuario.getMano().clear();
 
+        return ganador;
+    }
 
-
-
-
-
-
-
-
-
-
+    public void comprobarSaldo(int apuesta)throws DineroInsuficienteException {
+        if (apuesta <= usuario.getSaldo()) {
+            this.apuesta = apuesta;
+        } else {
+            throw new DineroInsuficienteException("Dinero insuficiente para apostar esa cantidad");
+        }
+    }
 
 
 
@@ -123,8 +146,14 @@ public class Partida {
         this.resultado = resultado;
     }
 
-    public void setApuesta(int apuesta) {
-        this.apuesta = apuesta;
+    public String setApuesta(int apuesta){
+        String rta = "";
+        try {
+            comprobarSaldo(apuesta);
+        } catch (DineroInsuficienteException e){
+            rta = e.getMessage();
+        }
+        return rta;
     }
 
     public int getId() {
