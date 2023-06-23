@@ -1,6 +1,7 @@
 package Jugador;
 
 import Archivos.ControladoraArchivos;
+import ClasesGenericas.GenericaMap;
 import Exceptions.ContraseñaIncorrectaException;
 import Exceptions.NombreDeUsuarioExistenteException;
 import Exceptions.UsuarioNoExisteException;
@@ -31,29 +32,20 @@ public class ControladoraUsuario {
         return aux;
     }
 
-    public boolean registrarUsuario(Usuario usuario) {
+    public boolean registrarUsuario(Usuario usuario) throws NombreDeUsuarioExistenteException {
         boolean rta=false;
-        String message="";
-        try {
-            rta = comprobarUsuario(usuario.getNombreDeUsuario());
-            usuarios.agregar(usuario.getNombreDeUsuario(), usuario);
-            ArrayList<Usuario> aux = new ArrayList<>();
-            aux = usuarios.pasarValoresAunArray();
-            ControladoraArchivos.grabarUsuarios(aux);
-        } catch (NombreDeUsuarioExistenteException e){
-            System.out.println(e.getMessage());
-        }
+        comprobarUsuario(usuario.getNombreDeUsuario());
+        usuarios.agregar(usuario.getNombreDeUsuario(), usuario);
+        ArrayList<Usuario> aux = new ArrayList<>();
+        aux = usuarios.pasarValoresAunArray();
+        ControladoraArchivos.grabarUsuarios(aux);
         return rta;
-
     }
 
-    public boolean comprobarUsuario(String username) throws NombreDeUsuarioExistenteException{
-        boolean rta=false;
-        rta = usuarios.contains(username);
-        if(rta) {
+    public void comprobarUsuario(String username) throws NombreDeUsuarioExistenteException{
+        if(usuarios.buscar(username)) {
             throw new NombreDeUsuarioExistenteException("El nombre de usuario ya existe. Ingrese un nuevo nombre.");
         }
-        return rta;
     }
 
     public boolean comprobarContraseña(Usuario aux, String contraseña) throws ContraseñaIncorrectaException{

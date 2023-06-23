@@ -17,10 +17,8 @@ public class Dealer extends Jugador{
         return info;
     }
 
-
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "Dealer";
+    }
 }

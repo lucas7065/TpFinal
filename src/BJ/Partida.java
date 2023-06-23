@@ -4,60 +4,25 @@ import Exceptions.DineroInsuficienteException;
 import Jugador.Usuario;
 import Jugador.Jugador;
 
-import javax.swing.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Partida {
+public class Partida implements Serializable {
     private int id;
     private Usuario usuario;
-    private Dealer dealer;
-    private Mazo mazo;
+    private transient Dealer dealer;
+    private transient Mazo mazo;
     private int resultado;
     private int apuesta;
 
     public Partida(int id, Usuario usuario){
-        // id comprobar arreglo de ids y generar uno nuevo
+        this.id = id;
         this.usuario = usuario;
         dealer = new Dealer();
         resultado = 0;
         mazo = new Mazo();
         apuesta = 0;
     }
-
-    /*
-
-    public int iniciarTurnoUsuario(){
-        usuario.iniciarMano(mazo.sacarCarta(), mazo.sacarCarta());
-
-
-        return sumarMano(usuario.getMano());
-    }
-
-    public String iniciarTurnoDealer(){
-        dealer.iniciarMano(mazo.sacarCarta(), mazo.sacarCarta());
-
-        return dealer.getMano().get(0).toString() + "\nCarta: X";
-    }
-
-
-    public void repartirCarta(){
-        usuario.pedirCarta(mazo.sacarCarta());
-    }
-
-
-
-
-    //metodos para el juego
-
-    public String mostrarManoUsuario(){
-        return usuario.listarMano() + "( " + sumarMano(usuario.getMano()) + " )";
-    }
-
-    public String mostrarManoDealer(){
-        return dealer.listarMano() + "( " + sumarMano(dealer.getMano()) + " )";
-    }
-
-     */
 
 
     public boolean iniciarPartida(){
@@ -70,6 +35,7 @@ public class Partida {
             usuario.setTurno(false);
             dealer.setTurno(true);
             rta = true;
+            resultado = apuesta;
         }
 
         return rta;
@@ -85,34 +51,42 @@ public class Partida {
         return rta;
     }
 
-
     public Jugador definirGanador(){
         Jugador ganador = null;
-        int resultado = 0;
-        resultado = apuesta;
 
-        if (sumarMano(usuario.getMano())<=21 && sumarMano(dealer.getMano())<=21){
-            if (sumarMano(dealer.getMano()) < sumarMano(usuario.getMano())){
-                ganador = usuario;
-            } else if (sumarMano(dealer.getMano()) > sumarMano(usuario.getMano())){
+        int sumaUsuario = sumarMano(usuario.getMano());
+        int sumaDealer = sumarMano(dealer.getMano());
+
+        if (sumaUsuario<=21 && sumaDealer<=21){
+            if (sumaUsuario < sumaDealer){
                 ganador = dealer;
-                resultado*=-1;
+            } else if (sumaUsuario > sumaDealer){
+                ganador = usuario;
+                usuario.setSaldo(apuesta*2);
+            }else {
+                usuario.setSaldo(apuesta);
             }
-        }else if (sumarMano(usuario.getMano())<=21 && sumarMano(dealer.getMano())>21){
+        } else if (sumaUsuario<=21 && sumaDealer>21){
             ganador = usuario;
-        }
-        else {
-            resultado*=-1;
+            usuario.setSaldo(apuesta*2);
+        } else if (sumaUsuario>21 && sumaDealer<=21){
+            ganador = dealer;
+        } else {
             ganador = dealer;
         }
 
-        usuario.setSaldo(usuario.getSaldo()+resultado);
-        setResultado(resultado);
-        this.resultado += resultado;
+        if (ganador instanceof Usuario){
+            resultado += apuesta;
+            usuario.setPuntaje(apuesta);
+        }else if (ganador instanceof Dealer){
+            resultado -= apuesta;
+        }
+
         usuario.getMano().clear();
 
         return ganador;
     }
+
 
     public void comprobarSaldo(int apuesta)throws DineroInsuficienteException {
         if (apuesta <= usuario.getSaldo()) {
@@ -151,6 +125,7 @@ public class Partida {
         String rta = "";
         try {
             comprobarSaldo(apuesta);
+            usuario.setSaldo(-(apuesta));
         } catch (DineroInsuficienteException e){
             rta = e.getMessage();
         }
@@ -179,5 +154,15 @@ public class Partida {
 
     public int getApuesta() {
         return apuesta;
+    }
+
+    @Override
+    public String toString() {
+        return "Partida{" +
+                "id=" + id +
+                ", usuario=" + usuario.getNombreDeUsuario() +
+                ", resultado=" + resultado +
+                ", apuesta=" + apuesta +
+                '}';
     }
 }

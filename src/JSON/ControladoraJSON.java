@@ -1,5 +1,6 @@
 package JSON;
 
+import Exceptions.NombreDeUsuarioExistenteException;
 import Jugador.ControladoraUsuario;
 import Jugador.Usuario;
 import org.json.JSONArray;
@@ -31,7 +32,11 @@ public class ControladoraJSON {
                     //JSONObject password=new JSONObject(json_password);
                     //usuario.setPassword(password.getString("password"));
                     usuario.setPassword("123");
-                    System.out.println(cu.registrarUsuario(usuario));
+                    try {
+                        cu.registrarUsuario(usuario);
+                    } catch (NombreDeUsuarioExistenteException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
 
             }

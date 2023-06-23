@@ -3,7 +3,9 @@ package Menu;
 import Archivos.ControladoraArchivos;
 import BJ.Partida;
 import Exceptions.ContraseñaIncorrectaException;
+import Exceptions.NombreDeUsuarioExistenteException;
 import Exceptions.UsuarioNoExisteException;
+import JSON.ControladoraJSON;
 import Jugador.ControladoraUsuario;
 import Jugador.Usuario;
 import java.util.Scanner;
@@ -44,6 +46,7 @@ public class Menu {
         Usuario usuario = null;
         boolean verificacion = false;
         int eleccionUsuario = 0;
+        boolean flagNombreUsuario = true;
 
         while (verificacion != true) {
             System.out.println("¡Bienvenido!" + "\n" +
@@ -65,8 +68,7 @@ public class Menu {
             } else if (eleccionUsuario  == 2){
                 usuario = new Usuario();
                 teclado.nextLine();
-                System.out.println("Ingrese un nombre de usuario unico e irrepetible");
-                usuario.setNombreDeUsuario(teclado.nextLine());
+
                 System.out.println("Ingrese su nombre completo");
                 usuario.setNombreCompleto(teclado.nextLine());
                 System.out.println("Ingrese su email");
@@ -75,14 +77,21 @@ public class Menu {
                     System.out.println("El email debe contener '@' y '.'");
                     usuario.setEmail(teclado.nextLine());
                 }
-
                 System.out.println("Ingrese su contraseña");
                 usuario.setPassword(teclado.nextLine());
+                System.out.println("Ingrese un nombre de usuario unico e irrepetible");
 
 
-                cu.registrarUsuario(usuario);
+                while(flagNombreUsuario==true) {
+                    usuario.setNombreDeUsuario(teclado.nextLine());
+                    try {
+                        flagNombreUsuario = cu.registrarUsuario(usuario);
+                    } catch (NombreDeUsuarioExistenteException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
                 verificacion = true;
-                eleccionUsuario=1;
+
             } else {
                 System.out.println("Opcion inexistente");
             }
@@ -185,8 +194,7 @@ public class Menu {
                 }
                 break;
             case 3:
-                cj.asignarPartidas(cu);
-                System.out.println(usuario.listarPartidas());
+                System.out.println(cj.mostrarPartidas(usuario));
                 break;
             default:
                 break;

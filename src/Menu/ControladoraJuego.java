@@ -2,13 +2,10 @@ package Menu;
 
 import Archivos.ControladoraArchivos;
 import BJ.Partida;
-import BJ.Pila;
+import ClasesGenericas.Pila;
 import Exceptions.PilaVaciaException;
-import Exceptions.UsuarioNoExisteException;
-import Jugador.ControladoraUsuario;
 import Jugador.Usuario;
-
-import java.util.Iterator;
+import java.util.*;
 
 public class ControladoraJuego {
     private Pila<Partida> partidas;
@@ -20,9 +17,10 @@ public class ControladoraJuego {
     }
 
     public Partida crearNuevaPartida(Usuario usuario){
+        partidas = ControladoraArchivos.leerPartidas();
         Partida nuevaPartida=null;
         try {
-            nuevaPartida = new Partida(partidas.tope().getId() + 1, usuario);
+            nuevaPartida = new Partida((partidas.tope().getId() + 1), usuario);
         }catch(PilaVaciaException e){
             nuevaPartida= new Partida(1, usuario);
         }
@@ -37,19 +35,39 @@ public class ControladoraJuego {
     }
 
 
-    public void asignarPartidas(ControladoraUsuario cu) {
+    private HashSet<Partida> buscarPartidas(Usuario u) throws PilaVaciaException{
+        HashSet<Partida> partidasUsuario=new HashSet<Partida>();
         partidas = ControladoraArchivos.leerPartidas();
-        try {
-            while (!partidas.pilaVacia()) {
-                Usuario u = cu.buscarUsuario(partidas.tope().getUsuario().getNombreDeUsuario());
-                u.cargarPartidas(partidas.desapilar());
-            }
 
-        } catch (PilaVaciaException e) {
-            System.out.println(e.getMessage());
-        } catch (UsuarioNoExisteException e) {
-            System.out.println(e.getMessage());
+
+        while (!partidas.vacio()) {
+            if(partidas.tope().getUsuario().getNombreDeUsuario().equalsIgnoreCase(u.getNombreDeUsuario())){
+                partidasUsuario.add(partidas.desapilar());
+            }else {
+                partidas.desapilar();
+            }
         }
+        return partidasUsuario;
+    }
+
+    public String mostrarPartidas(Usuario u){
+        String info = "";
+        try{
+            HashSet<Partida>partidas = buscarPartidas(u);
+            if (partidas.isEmpty()){
+                info = "No hay partidas.";
+            }else {
+                Iterator it = partidas.iterator();
+
+                while (it.hasNext()){
+                    info += it.next().toString() + "\n";
+                }
+            }
+        } catch (PilaVaciaException e){
+            info = e.getMessage();
+
+        }
+        return info;
     }
 
 

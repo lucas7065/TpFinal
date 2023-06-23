@@ -1,6 +1,6 @@
 package BJ;
 
-import BJ.Carta;
+import ClasesGenericas.Pila;
 import Exceptions.PilaVaciaException;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ private Pila<Carta> cartas;
 
     public void verMazo(){
         int i=0;
-        while(!cartas.pilaVacia()){
+        while(!cartas.vacio()){
             try {
                 System.out.println(cartas.desapilar().toString() + "" + i);
                 i++;

@@ -4,8 +4,7 @@ package Jugador;
 import BJ.Partida;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Iterator;
+
 
 
 public class Usuario extends Jugador implements Serializable{
@@ -15,7 +14,6 @@ public class Usuario extends Jugador implements Serializable{
         private String password;
         private int saldo;
         private int puntaje;
-        private transient HashSet<Partida> partidas;
 
 
     public Usuario() {
@@ -26,7 +24,6 @@ public class Usuario extends Jugador implements Serializable{
         this.saldo = 1000;
         this.puntaje = 0;
         super.setTurno(true);
-        partidas = new HashSet<Partida>();
     }
 
 
@@ -37,7 +34,6 @@ public class Usuario extends Jugador implements Serializable{
         this.password = password;
         saldo = 1000;
         puntaje = 0;
-        partidas = new HashSet<Partida>();
     }
 
     public Usuario(String nombre, String apellido, String id, String email, String nombreDeUsuario, String password) {
@@ -47,7 +43,6 @@ public class Usuario extends Jugador implements Serializable{
         this.password = password;
         this.saldo = 1000;
         puntaje = 0;
-        partidas = new HashSet<Partida>();
     }
 
 
@@ -96,7 +91,7 @@ public class Usuario extends Jugador implements Serializable{
     }
 
     public void setSaldo(int saldo) {
-        this.saldo = saldo;
+        this.saldo += saldo;
     }
 
     public int getPuntaje() {
@@ -106,24 +101,6 @@ public class Usuario extends Jugador implements Serializable{
     public void setPuntaje(int puntaje) {
         this.puntaje = puntaje;
     }
-
-    public void cargarPartidas(Partida aux){
-        partidas.add(aux);
-    }
-
-
-    public String listarPartidas(){
-        String info = "";
-
-        Iterator it = partidas.iterator();
-
-        while (it.hasNext()){
-            info += it.next().toString() + "\n";
-        }
-
-        return info;
-    }
-
 
 
     @Override

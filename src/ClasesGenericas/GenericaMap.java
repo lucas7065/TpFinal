@@ -1,8 +1,8 @@
-package Jugador;
+package ClasesGenericas;
 
 import java.util.*;
 
-public class GenericaMap<K, V> {
+public class GenericaMap<K, V> implements I_Administrar {
     K k;
     V v;
     Map<K, V> elementos;
@@ -37,7 +37,7 @@ public class GenericaMap<K, V> {
     }
 
     public boolean agregar(K k, V v) {
-        elementos.put(k,v);
+        elementos.put(k, v);
         return false;
     }
 
@@ -75,10 +75,10 @@ public class GenericaMap<K, V> {
         return v;
     }
 
-    public boolean contains(K k){
-        return elementos.containsKey(k);
-    }
-
+    /**
+     Pasa todos los elementos del mapa a un arreglo
+     * @return un arreglo de valores
+     */
 
     public ArrayList<V> pasarValoresAunArray(){
         // Getting Collection of values from HashMap
@@ -109,5 +109,20 @@ public class GenericaMap<K, V> {
     public V reemplazarValor(K k, V v){
         V aux= elementos.replace(k, v);
         return aux;
+    }
+
+    @Override
+    public Boolean buscar(Object o) {
+        K k=(K)o;
+        return elementos.containsKey(k);
+    }
+
+    /**
+     * Verifica si el mapa esta vacío
+     * @return true si el mapa esta vacío
+     */
+    @Override
+    public boolean vacio() {
+        return elementos.isEmpty();
     }
 }

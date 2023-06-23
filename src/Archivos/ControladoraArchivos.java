@@ -1,7 +1,8 @@
 package Archivos;
 import BJ.Partida;
-import BJ.Pila;
-import Jugador.GenericaMap;
+import ClasesGenericas.Pila;
+import ClasesGenericas.GenericaMap;
+import Exceptions.PilaVaciaException;
 import Jugador.Usuario;
 
 import java.io.*;
@@ -99,9 +100,13 @@ public class ControladoraArchivos {
         {
             fileOutputStream = new FileOutputStream("partidas.dat");
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            while(!partidas.pilaVacia())
-            {
-                objectOutputStream.writeObject(partidas);
+            while(!partidas.vacio())
+            { try{
+                Partida aux=partidas.desapilar();
+                objectOutputStream.writeObject(aux);
+            }catch(PilaVaciaException e){
+                System.out.println(e.getMessage());
+            }
             }
         }
         catch (IOException ex)
@@ -125,6 +130,7 @@ public class ControladoraArchivos {
     public static Pila<Partida> leerPartidas()
     {
         Pila<Partida> partidas=new Pila<>();
+        Pila<Partida> aux=new Pila<>();
 
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
@@ -136,13 +142,13 @@ public class ControladoraArchivos {
 
             while (true)
             {
-                Partida aux = (Partida) objectInputStream.readObject();
-                partidas.apilar(aux);
+                Partida p = (Partida) objectInputStream.readObject();
+                aux.apilar(p);
             }
         }
         catch (EOFException ex)
         {
-            System.out.println("FIN de ARCHIVO");
+            System.out.println("");
         }
         catch (ClassNotFoundException ex)
         {
@@ -169,7 +175,14 @@ public class ControladoraArchivos {
 
         }
 
+        try{
+            while (!aux.vacio()){
+                partidas.apilar(aux.desapilar());
+            }
+        }catch(PilaVaciaException e){
+            System.out.println(e.getMessage());
+        }
+
         return partidas;
     }
-
 }
