@@ -5,7 +5,6 @@ import BJ.Partida;
 import Exceptions.ContraseñaIncorrectaException;
 import Exceptions.NombreDeUsuarioExistenteException;
 import Exceptions.UsuarioNoExisteException;
-import JSON.ControladoraJSON;
 import Jugador.ControladoraUsuario;
 import Jugador.Usuario;
 import java.util.Scanner;
