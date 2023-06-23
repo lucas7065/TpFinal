@@ -19,7 +19,7 @@ public class Menu {
         ControladoraJuego controladoraJuego = new ControladoraJuego();
 
         ControladoraUsuario controladoraUsuario = new ControladoraUsuario(ControladoraArchivos.leerUsuarios());
-        controladoraUsuario = ControladoraJSON.leerArchivo();
+        //controladoraUsuario = ControladoraJSON.leerArchivo();
 
         //controladoraJuego.asignarPartidas(controladoraUsuario);
 
@@ -58,7 +58,7 @@ public class Menu {
                 System.out.println("Ingrese su usuario y contraseña");
                 teclado.nextLine();
                 try {
-                    usuario = cu.loginUsuario(teclado.nextLine(), teclado.nextLine());
+                    usuario = cu.loginUsuario(teclado.nextLine(),teclado.nextLine());
                     verificacion = true;
                 } catch (UsuarioNoExisteException e) {
                     System.out.println(e.getMessage());
@@ -79,7 +79,7 @@ public class Menu {
                 }
                 System.out.println("Ingrese su contraseña");
                 usuario.setPassword(teclado.nextLine());
-                System.out.println("Ingrese un nombre de usuario unico e irrepetible");
+                System.out.println("Ingrese un nombre de usuario");
 
 
                 while(flagNombreUsuario==true) {
@@ -112,11 +112,13 @@ public class Menu {
             case 1:
                 Partida partida = cj.crearNuevaPartida(usuario);
                 usuario.setTurno(true);
+                partida.setApuesta(0);
 
                 while (partida.getApuesta() == 0){
                     System.out.println("Dinero disponible: " + usuario.getSaldo() + "\n" +
                             "¿Cuanto desea apostar?");
 
+                    teclado.nextLine();
                     System.out.println(partida.setApuesta(teclado.nextInt()));
                 }
 
@@ -158,6 +160,9 @@ public class Menu {
 
                     cj.finalizarPartida(partida);
                     cu.guardarUsuario();
+
+                    usuario.getMano().clear();
+                    partida.getDealer().getMano().clear();
 
 
                 }

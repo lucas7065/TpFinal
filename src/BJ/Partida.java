@@ -72,13 +72,13 @@ public class Partida implements Serializable {
                 ganador = dealer;
             } else if (sumaUsuario > sumaDealer){
                 ganador = usuario;
-                usuario.setSaldo(apuesta*2);
+                usuario.setSaldo(apuesta);
             }else {
                 usuario.setSaldo(apuesta);
             }
         } else if (sumaUsuario<=21 && sumaDealer>21){
             ganador = usuario;
-            usuario.setSaldo(apuesta*2);
+            usuario.setSaldo(apuesta);
         } else if (sumaUsuario>21 && sumaDealer<=21){
             ganador = dealer;
         } else {
@@ -91,8 +91,6 @@ public class Partida implements Serializable {
         }else if (ganador instanceof Dealer){
             resultado -= apuesta;
         }
-
-        usuario.getMano().clear();
 
         return ganador;
     }

@@ -12,7 +12,7 @@ public class Usuario extends Jugador implements Serializable{
         private String nombreCompleto;
         private String email;
         private String password;
-        private transient int saldo;
+        private int saldo;
         private int puntaje;
 
 
