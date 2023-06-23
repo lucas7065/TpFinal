@@ -13,10 +13,6 @@ public abstract class Jugador {
         turno = false;
     }
 
-    public boolean plantarse() {
-        return false;
-    }
-
     public void recibirCarta(Carta carta) {
         mano.add(carta);
     }

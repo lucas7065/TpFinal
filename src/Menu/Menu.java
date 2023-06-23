@@ -19,7 +19,7 @@ public class Menu {
         ControladoraJuego controladoraJuego = new ControladoraJuego();
 
         ControladoraUsuario controladoraUsuario = new ControladoraUsuario(ControladoraArchivos.leerUsuarios());
-        //controladoraUsuario = ControladoraJSON.leerArchivo();
+        controladoraUsuario = ControladoraJSON.leerArchivo();
 
         //controladoraJuego.asignarPartidas(controladoraUsuario);
 
@@ -157,6 +157,7 @@ public class Menu {
                     }
 
                     cj.finalizarPartida(partida);
+                    cu.guardarUsuario();
 
 
                 }

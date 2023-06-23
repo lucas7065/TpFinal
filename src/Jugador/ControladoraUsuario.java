@@ -32,14 +32,25 @@ public class ControladoraUsuario {
         return aux;
     }
 
+    /**
+     * metodo para registrar un nuevo usuario
+     * comprueba que el nombre de usuario no exista
+     * y guarda el nuevo usuario en el archivo
+     * @param usuario
+     * @throws NombreDeUsuarioExistenteException cuando el nombre de usuario ya existe
+     */
     public boolean registrarUsuario(Usuario usuario) throws NombreDeUsuarioExistenteException {
         boolean rta=false;
         comprobarUsuario(usuario.getNombreDeUsuario());
         usuarios.agregar(usuario.getNombreDeUsuario(), usuario);
+        guardarUsuario();
+        return rta;
+
+    }
+    public void guardarUsuario(){
         ArrayList<Usuario> aux = new ArrayList<>();
         aux = usuarios.pasarValoresAunArray();
         ControladoraArchivos.grabarUsuarios(aux);
-        return rta;
     }
 
     public void comprobarUsuario(String username) throws NombreDeUsuarioExistenteException{
@@ -151,6 +162,7 @@ public class ControladoraUsuario {
 
         return mensaje;
     }
+
     public Usuario buscarUsuario(String username) throws UsuarioNoExisteException{
         Usuario aux=null;
         aux= usuarios.getElemento(username);

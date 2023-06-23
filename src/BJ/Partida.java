@@ -25,6 +25,11 @@ public class Partida implements Serializable {
     }
 
 
+    /**
+     * se reparten dos cartas al usuario y lo mismo al dealer
+     * se llama a la funcion verificarBJ para comprobar si el usuario gana con esas dos primeras cartas repartidas
+     * @return false si el usuario no gano en la primer mano o true si gano
+     */
     public boolean iniciarPartida(){
         boolean rta = false;
         for (int i = 0; i<2; i++){
@@ -36,6 +41,7 @@ public class Partida implements Serializable {
             dealer.setTurno(true);
             rta = true;
             resultado = apuesta;
+            usuario.setSaldo(apuesta*2);
         }
 
         return rta;
@@ -51,6 +57,10 @@ public class Partida implements Serializable {
         return rta;
     }
 
+    /**
+     *
+     * @return
+     */
     public Jugador definirGanador(){
         Jugador ganador = null;
 
@@ -88,7 +98,12 @@ public class Partida implements Serializable {
     }
 
 
-    public void comprobarSaldo(int apuesta)throws DineroInsuficienteException {
+    /**
+     * comprueba el saldo del usuario
+     * @param apuesta
+     * @throws DineroInsuficienteException cuando el saldo es menor a la cantidad apostada
+     */
+    public void comprobarSaldo(int apuesta) throws DineroInsuficienteException {
         if (apuesta <= usuario.getSaldo()) {
             this.apuesta = apuesta;
         } else {
@@ -97,7 +112,11 @@ public class Partida implements Serializable {
     }
 
 
-
+    /**
+     * metodo para calcular la suma de las cartas
+     * @param mano cartas del jugador
+     * @return la suma
+     */
     public int sumarMano(ArrayList<Carta> mano){
         int suma = 0;
         int contAses = 0;

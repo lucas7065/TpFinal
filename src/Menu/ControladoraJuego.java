@@ -16,6 +16,11 @@ public class ControladoraJuego {
         partidas = new Pila<>();
     }
 
+    /**
+     * crea una nueva partida y le asigna una id segun las partidas guardadas
+     * @param usuario
+     * @return la nueva partida
+     */
     public Partida crearNuevaPartida(Usuario usuario){
         partidas = ControladoraArchivos.leerPartidas();
         Partida nuevaPartida=null;
@@ -27,6 +32,10 @@ public class ControladoraJuego {
         return nuevaPartida;
     }
 
+    /**
+     * metodo para guardar una partida en el archivo de partidas
+     * @param aux una partida
+     */
     public void finalizarPartida(Partida aux){
         Pila<Partida> partidas = new Pila<Partida>();
         partidas = ControladoraArchivos.leerPartidas();
@@ -35,6 +44,13 @@ public class ControladoraJuego {
     }
 
 
+    /**
+     * lee el archivo de partidas y busca a las partidas de cada usuario
+     * y las guarda en un HashSet
+     * @param u usuario a buscar
+     * @return hashset de partidas
+     * @throws PilaVaciaException cuando el usuario no tiene partidas
+     */
     private HashSet<Partida> buscarPartidas(Usuario u) throws PilaVaciaException{
         HashSet<Partida> partidasUsuario=new HashSet<Partida>();
         partidas = ControladoraArchivos.leerPartidas();

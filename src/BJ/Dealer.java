@@ -7,6 +7,11 @@ public class Dealer extends Jugador{
         super();
     }
 
+    /**
+     * cuando no es el turno del dealer muestra solo una carta
+     * y muestra las dos cuando termina el turno del usuario y es su turno
+     * @return las cartas
+     */
     public String listarMano(){
         String info = "";
         if (!isTurno()){

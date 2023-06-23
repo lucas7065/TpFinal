@@ -18,6 +18,10 @@ private Pila<Carta> cartas;
         crearMazo();
     }
 
+    /**
+     * crea un mazo con las enumeraciones de rango y palo
+     * le asigna un valor numerico a cada carta
+     */
     public void crearMazo() {
         ArrayList<Integer> numeros=new ArrayList<>(Arrays.asList(2,3,4,5,6,7,8,9,10,11));
 
@@ -37,6 +41,10 @@ private Pila<Carta> cartas;
         }
     }
 
+    /**
+     * desapila una carta del mazo para repartir en la partida
+     * @return una carta
+     */
     public Carta sacarCarta(){
         Carta c=new Carta();
         try{
@@ -48,15 +56,4 @@ private Pila<Carta> cartas;
         return c;
     }
 
-    public void verMazo(){
-        int i=0;
-        while(!cartas.vacio()){
-            try {
-                System.out.println(cartas.desapilar().toString() + "" + i);
-                i++;
-            }catch (PilaVaciaException e){
-                System.out.println(e.getMessage());
-            }
-        }
-    }
 }
